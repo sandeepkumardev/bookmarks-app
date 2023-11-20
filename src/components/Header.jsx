@@ -1,43 +1,26 @@
-import { Avatar, Box, Button, Flex, Spacer, WrapItem } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Heading, WrapItem } from "@chakra-ui/react";
 import React from "react";
-import { IoMdAdd } from "react-icons/io";
+import Actions from "./Actions";
 
 const Header = () => {
   return (
-    <Flex px={1} h={8} className="items-center border border-black">
-      <Box>BookMarks</Box>
+    <Flex
+      justifyContent="space-between"
+      p={2}
+      boxShadow="base"
+      alignItems="center"
+      bgColor="#6a5ee6"
+      userSelect="none"
+    >
+      <Heading as="h3" size="md" color="white" cursor={"pointer"}>
+        Bookmarks
+      </Heading>
 
-      <Spacer />
+      <Box display="flex" alignItems={"center"} gap="10px">
+        <Actions />
 
-      <Box>
-        <Button
-          leftIcon={<IoMdAdd />}
-          variant="outline"
-          size="xs"
-          className="m-1"
-        >
-          Add B
-        </Button>
-
-        <Button
-          leftIcon={<IoMdAdd />}
-          variant="outline"
-          size="xs"
-          className="m-1"
-        >
-          Add C
-        </Button>
-      </Box>
-
-      <Spacer />
-
-      <Box>
-        <WrapItem>
-          <Avatar
-            size="xs"
-            name="Dan Abrahmov"
-            src="https://bit.ly/dan-abramov"
-          />
+        <WrapItem cursor={"pointer"}>
+          <Avatar name="Sandeep kumar" bg="LightGray" />
         </WrapItem>
       </Box>
     </Flex>
