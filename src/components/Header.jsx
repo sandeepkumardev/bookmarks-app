@@ -8,7 +8,7 @@ const Header = () => {
       justifyContent="space-between"
       p={2}
       boxShadow="base"
-      alignItems="center"
+      // alignItems="center"
       bgColor="#6a5ee6"
       userSelect="none"
     >

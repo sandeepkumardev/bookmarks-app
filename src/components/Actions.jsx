@@ -11,6 +11,10 @@ import { MdAttachFile } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 const Actions = () => {
+  const addBookmarkHandler = () => {};
+
+  const addCategoryHandler = () => {};
+
   return (
     <Menu>
       <MenuButton
@@ -20,8 +24,12 @@ const Actions = () => {
         variant="outline"
       />
       <MenuList>
-        <MenuItem icon={<IoAddCircle />}>Add Bookmark</MenuItem>
-        <MenuItem icon={<MdAttachFile />}>New Category</MenuItem>
+        <MenuItem icon={<IoAddCircle />} onClick={addBookmarkHandler}>
+          Add Bookmark
+        </MenuItem>
+        <MenuItem icon={<MdAttachFile />} onClick={addCategoryHandler}>
+          New Category
+        </MenuItem>
       </MenuList>
     </Menu>
   );
