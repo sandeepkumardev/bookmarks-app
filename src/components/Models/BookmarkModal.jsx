@@ -11,9 +11,11 @@ import {
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { AppActions } from "../../context/ActionProvider";
+import { AppStore } from "../../context/StoreProvider";
 
 function BookmarkModal() {
   const { isBmOpen, bmModalHandler } = useContext(AppActions);
+  const { addBookmark } = useContext(AppStore);
   const [input, setInput] = useState("");
 
   const inputHandler = (e) => {
@@ -26,7 +28,7 @@ function BookmarkModal() {
       return;
     }
 
-    console.log(input);
+    addBookmark(input);
 
     setInput("");
     bmModalHandler();

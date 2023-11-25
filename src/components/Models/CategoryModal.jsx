@@ -11,9 +11,11 @@ import {
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { AppActions } from "../../context/ActionProvider";
+import { AppStore } from "../../context/StoreProvider";
 
 function CategoryModal() {
   const { isCtOpen, ctModalHandler } = useContext(AppActions);
+  const { addCategory } = useContext(AppStore);
   const [input, setInput] = useState("");
 
   const inputHandler = (e) => {
@@ -26,7 +28,7 @@ function CategoryModal() {
       return;
     }
 
-    console.log(input);
+    addCategory(input);
 
     setInput("");
     ctModalHandler();
