@@ -5,15 +5,14 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
 import { IoAddCircle } from "react-icons/io5";
 import { MdAttachFile } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { AppActions } from "../context/ActionProvider";
 
 const Actions = () => {
-  const addBookmarkHandler = () => {};
-
-  const addCategoryHandler = () => {};
+  const { bmModalHandler, ctModalHandler } = useContext(AppActions);
 
   return (
     <Menu>
@@ -24,10 +23,10 @@ const Actions = () => {
         variant="outline"
       />
       <MenuList>
-        <MenuItem icon={<IoAddCircle />} onClick={addBookmarkHandler}>
+        <MenuItem icon={<IoAddCircle />} onClick={bmModalHandler}>
           Add Bookmark
         </MenuItem>
-        <MenuItem icon={<MdAttachFile />} onClick={addCategoryHandler}>
+        <MenuItem icon={<MdAttachFile />} onClick={ctModalHandler}>
           New Category
         </MenuItem>
       </MenuList>

@@ -12,6 +12,7 @@
 /build
 
 *-lock.json
+*.lock
 
 # misc
 .DS_Store
