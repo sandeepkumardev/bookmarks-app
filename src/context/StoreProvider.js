@@ -3,23 +3,19 @@ import { createContext, useState } from "react";
 export const AppStore = createContext();
 
 export const StoreProvider = ({ children }) => {
-  const [bookmarks, setBookmarks] = useState([]);
+  const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]);
-
-  const addBookmark = (value) => {
-    setBookmarks([...bookmarks, value]);
-  };
 
   const addCategory = (value) => {
     setCategories([...categories, value]);
   };
 
-  console.log(bookmarks, categories);
+  const addItems = (value) => {
+    setItems([...items, value]);
+  };
 
   return (
-    <AppStore.Provider
-      value={{ bookmarks, categories, addBookmark, addCategory }}
-    >
+    <AppStore.Provider value={{ items, addItems, categories, addCategory }}>
       {children}
     </AppStore.Provider>
   );
