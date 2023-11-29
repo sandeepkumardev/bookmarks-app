@@ -16,14 +16,17 @@ import { AppStore } from "../../context/StoreProvider";
 
 function BookmarkModal() {
   const { isBmOpen, bmModalHandler } = useContext(AppActions);
-  const { addItems, categories } = useContext(AppStore);
+  const { addBookmark, categories } = useContext(AppStore);
 
   const [icon] = useState(
     "https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png"
   );
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState({
+    id: "",
+    name: "",
+  });
 
   const submitHandler = () => {
     if (!url || !title || !selectedCategory) {
@@ -35,10 +38,10 @@ function BookmarkModal() {
       title,
       url,
       icon,
-      category: selectedCategory,
+      categoryId: selectedCategory.id,
     };
 
-    addItems(newItem);
+    addBookmark(newItem);
 
     setUrl("");
     setTitle("");
@@ -74,14 +77,18 @@ function BookmarkModal() {
                 categories.length ? "Select option" : "Please add a category!"
               }
               mt={4}
-              value={selectedCategory}
+              value={selectedCategory.name}
               onChange={(e) => {
-                setSelectedCategory(e.target.value);
+                const selectedOption = e.target.options[e.target.selectedIndex];
+                setSelectedCategory({
+                  id: selectedOption.id,
+                  name: selectedOption.value,
+                });
               }}
             >
-              {categories.map((item, i) => (
-                <option key={i} value={item}>
-                  {item}
+              {categories.map((category, i) => (
+                <option key={i} id={category.id} value={category.name}>
+                  {category.name}
                 </option>
               ))}
             </Select>

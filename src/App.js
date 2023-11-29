@@ -1,5 +1,5 @@
 import "./App.css";
-import { Box, ChakraProvider, Flex } from "@chakra-ui/react";
+import { ChakraProvider, Flex } from "@chakra-ui/react";
 import Header from "./components/Header";
 import CardBox from "./components/CardBox";
 import BookmarkModal from "./components/Models/BookmarkModal";
