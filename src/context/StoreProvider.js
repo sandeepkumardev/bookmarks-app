@@ -19,6 +19,11 @@ export const StoreProvider = ({ children }) => {
   useEffect(() => {
     onValue(ref(db, objName), (snapshot) => {
       const data = snapshot.val();
+      if (!data) {
+        setItems([]);
+        return;
+      }
+
       const dataArr = Object.keys(data).map((key) => ({
         ...data[key],
         id: key,
