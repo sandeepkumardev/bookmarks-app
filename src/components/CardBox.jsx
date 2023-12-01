@@ -5,13 +5,27 @@ import {
   CardHeader,
   Heading,
   List,
-  ListIcon,
   ListItem,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 
-const CardBox = () => {
+const CardBox = ({ item }) => {
+  const [bookmarks, setBookmarks] = useState([]);
+
+  useEffect(() => {
+    if (!item.bookmarks) return;
+
+    const dataArr = Object.keys(item?.bookmarks).map((key) => ({
+      ...item.bookmarks[key],
+      id: key,
+    }));
+
+    setBookmarks(dataArr);
+  }, [item]);
+
+  if (!item.bookmarks) return;
+
   return (
     <Card m={"2"} rounded={4} overflow={"hidden"} minW={300} maxW={350}>
       <CardHeader
@@ -21,28 +35,40 @@ const CardBox = () => {
         bgColor={"#6a5ee6"}
         color={"white"}
       >
-        <Heading size={"sm"}>Google</Heading>
+        <Heading size={"sm"}>{item.name}</Heading>
 
         <Box>
           <CiEdit fontSize={"25px"} />
         </Box>
       </CardHeader>
 
-      <CardBody p={1}>
+      <CardBody p={0}>
         <List spacing={3}>
-          <ListItems />
-          <ListItems />
+          {bookmarks.map((bookmark, i) => (
+            <SingleBookmark key={i} bookmark={bookmark} />
+          ))}
         </List>
       </CardBody>
     </Card>
   );
 };
 
-const ListItems = () => {
+const SingleBookmark = ({ bookmark }) => {
+  console.log(bookmark);
   return (
-    <ListItem style={{ marginTop: "0px" }}>
-      <ListIcon as={CiEdit} color="green.500" />
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit
+    <ListItem
+      style={{
+        marginTop: "0px",
+        borderBottom: "1px solid lightgray",
+        padding: 2,
+      }}
+      display={"flex"}
+      alignItems={"center"}
+    >
+      <Box w={"12px"} mr={2} ml={2} mt={0.5}>
+        <img src={bookmark.icon} alt="icon" height={"100%"} width={"100%"} />
+      </Box>
+      {bookmark.title}
     </ListItem>
   );
 };

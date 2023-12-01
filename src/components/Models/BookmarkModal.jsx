@@ -9,14 +9,15 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
+  Spacer,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { AppActions } from "../../context/ActionProvider";
 import { AppStore } from "../../context/StoreProvider";
 
 function BookmarkModal() {
-  const { isBmOpen, bmModalHandler } = useContext(AppActions);
-  const { addBookmark, categories } = useContext(AppStore);
+  const { isBmOpen, bmModalHandler, ctModalHandler } = useContext(AppActions);
+  const { addBookmark, items } = useContext(AppStore);
 
   const [icon] = useState(
     "https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png"
@@ -54,7 +55,7 @@ function BookmarkModal() {
       <Modal isOpen={isBmOpen} onClose={bmModalHandler}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Add Bookmark</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Input
@@ -74,7 +75,7 @@ function BookmarkModal() {
 
             <Select
               placeholder={
-                categories.length ? "Select option" : "Please add a category!"
+                items.length ? "Select option" : "Please add a category!"
               }
               mt={4}
               value={selectedCategory.name}
@@ -86,7 +87,7 @@ function BookmarkModal() {
                 });
               }}
             >
-              {categories.map((category, i) => (
+              {items.map((category, i) => (
                 <option key={i} id={category.id} value={category.name}>
                   {category.name}
                 </option>
@@ -95,9 +96,14 @@ function BookmarkModal() {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={bmModalHandler}>
-              Close
+            <Button
+              variant={"outline"}
+              colorScheme="green"
+              onClick={ctModalHandler}
+            >
+              + New Category
             </Button>
+            <Spacer />
             <Button colorScheme="green" onClick={submitHandler}>
               Add
             </Button>
