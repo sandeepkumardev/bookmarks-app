@@ -57,3 +57,11 @@ export function deleteCategoryDB(id) {
     console.log("Error in deleting category - ", error);
   });
 }
+
+export function renameCategoryDB(id, newName) {
+  update(ref(db, `${objName}/${id}`), {
+    name: newName,
+  }).catch((error) => {
+    console.log("Error in rename category - ", error);
+  });
+}

@@ -4,6 +4,7 @@ import {
   CardBody,
   CardHeader,
   Heading,
+  Input,
   List,
   ListItem,
   Spacer,
@@ -11,10 +12,17 @@ import {
 import React, { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
-import { deleteBookmarkDB, deleteCategoryDB } from "../firebase/sdk";
+import {
+  deleteBookmarkDB,
+  deleteCategoryDB,
+  renameCategoryDB,
+} from "../firebase/sdk";
+import { IoMdDoneAll } from "react-icons/io";
 
 const CardBox = ({ item }) => {
   const [bookmarks, setBookmarks] = useState([]);
+  const [ctName, setCtName] = useState(item.name);
+  const [isEdit, setIsEdit] = useState(false);
 
   const deleteBookmark = (id) => {
     deleteBookmarkDB({ cID: item.id, bID: id });
@@ -42,6 +50,12 @@ const CardBox = ({ item }) => {
     setBookmarks(dataArr);
   }, [item]);
 
+  const renameCategory = () => {
+    renameCategoryDB(item.id, ctName);
+
+    setIsEdit(false);
+  };
+
   if (!item.bookmarks) return;
 
   return (
@@ -54,17 +68,40 @@ const CardBox = ({ item }) => {
         bgColor={"#6a5ee6"}
         color={"white"}
       >
-        <Heading size={"sm"} ml={1}>
-          {item.name}
-        </Heading>
+        {isEdit ? (
+          <Input
+            variant="flushed"
+            value={ctName}
+            onChange={(e) => setCtName(e.target.value)}
+            placeholder="Please enter new name!"
+          />
+        ) : (
+          <Heading size={"sm"} ml={1}>
+            {item.name}
+          </Heading>
+        )}
 
         <Box display={"flex"} alignItems={"center"}>
-          <CiEdit fontSize={"22px"} />
-          <MdDeleteOutline
-            style={{ marginLeft: "5px", color: "#f46a31" }}
-            fontSize={"20px"}
-            onClick={deleteCategory}
-          />
+          {isEdit ? (
+            <IoMdDoneAll
+              style={{
+                marginLeft: "10px",
+                marginRight: "8px",
+                color: "#f46a31",
+              }}
+              fontSize={"20px"}
+              onClick={renameCategory}
+            />
+          ) : (
+            <>
+              <CiEdit fontSize={"22px"} onClick={() => setIsEdit(true)} />
+              <MdDeleteOutline
+                style={{ marginLeft: "5px", color: "#f46a31" }}
+                fontSize={"20px"}
+                onClick={deleteCategory}
+              />
+            </>
+          )}
         </Box>
       </CardHeader>
 
