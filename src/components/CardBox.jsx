@@ -6,12 +6,30 @@ import {
   Heading,
   List,
   ListItem,
+  Spacer,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
+import { MdDeleteOutline } from "react-icons/md";
+import { deleteBookmarkDB, deleteCategoryDB } from "../firebase/sdk";
 
 const CardBox = ({ item }) => {
   const [bookmarks, setBookmarks] = useState([]);
+
+  const deleteBookmark = (id) => {
+    deleteBookmarkDB({ cID: item.id, bID: id });
+  };
+
+  const deleteCategory = () => {
+    if (
+      window.confirm(
+        `Do you want to delete ${item.name} category! All bookmarks of this category will be deleted.`
+      ) !== true
+    )
+      return;
+
+    deleteCategoryDB(item.id);
+  };
 
   useEffect(() => {
     if (!item.bookmarks) return;
@@ -32,20 +50,32 @@ const CardBox = ({ item }) => {
         p={1}
         display={"flex"}
         justifyContent={"space-between"}
+        alignItems={"center"}
         bgColor={"#6a5ee6"}
         color={"white"}
       >
-        <Heading size={"sm"}>{item.name}</Heading>
+        <Heading size={"sm"} ml={1}>
+          {item.name}
+        </Heading>
 
-        <Box>
-          <CiEdit fontSize={"25px"} />
+        <Box display={"flex"} alignItems={"center"}>
+          <CiEdit fontSize={"22px"} />
+          <MdDeleteOutline
+            style={{ marginLeft: "5px", color: "#f46a31" }}
+            fontSize={"20px"}
+            onClick={deleteCategory}
+          />
         </Box>
       </CardHeader>
 
       <CardBody p={0}>
         <List spacing={3}>
           {bookmarks.map((bookmark, i) => (
-            <SingleBookmark key={i} bookmark={bookmark} />
+            <SingleBookmark
+              key={i}
+              bookmark={bookmark}
+              deleteBookmark={deleteBookmark}
+            />
           ))}
         </List>
       </CardBody>
@@ -53,8 +83,7 @@ const CardBox = ({ item }) => {
   );
 };
 
-const SingleBookmark = ({ bookmark }) => {
-  console.log(bookmark);
+const SingleBookmark = ({ bookmark, deleteBookmark }) => {
   return (
     <ListItem
       style={{
@@ -69,6 +98,15 @@ const SingleBookmark = ({ bookmark }) => {
         <img src={bookmark.icon} alt="icon" height={"100%"} width={"100%"} />
       </Box>
       {bookmark.title}
+      <Spacer />
+      <Box
+        mr={2}
+        ml={2}
+        cursor={"pointer"}
+        onClick={() => deleteBookmark(bookmark.id)}
+      >
+        <MdDeleteOutline color="#f46a31" />
+      </Box>
     </ListItem>
   );
 };

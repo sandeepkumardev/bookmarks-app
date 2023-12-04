@@ -1,5 +1,13 @@
 import { initializeApp } from "firebase/app";
-import { child, getDatabase, push, ref, set, update } from "firebase/database";
+import {
+  child,
+  getDatabase,
+  push,
+  ref,
+  remove,
+  set,
+  update,
+} from "firebase/database";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -36,4 +44,16 @@ export function addBookmarkDB(item) {
   update(ref(db), updates);
 
   return id;
+}
+
+export function deleteBookmarkDB({ cID, bID }) {
+  remove(ref(db, `${objName}/${cID}/bookmarks/${bID}`)).catch((error) => {
+    console.log("Error in deleting bookmark - ", error);
+  });
+}
+
+export function deleteCategoryDB(id) {
+  remove(ref(db, `${objName}/${id}`)).catch((error) => {
+    console.log("Error in deleting category - ", error);
+  });
 }
