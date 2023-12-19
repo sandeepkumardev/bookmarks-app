@@ -9,6 +9,7 @@ import {
   List,
   ListItem,
   Spacer,
+  Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
@@ -135,6 +136,7 @@ const SingleBookmark = ({ bookmark, deleteBookmark }) => {
       <Link
         href={bookmark.url}
         isExternal
+        flex={1}
         display={"flex"}
         alignItems={"center"}
         style={{ textDecoration: "none" }}
@@ -142,10 +144,8 @@ const SingleBookmark = ({ bookmark, deleteBookmark }) => {
         <Box w={"12px"} mr={2} ml={2} mt={0.5}>
           <img src={bookmark.icon} alt="icon" height={"100%"} width={"100%"} />
         </Box>
-        {bookmark.title}
-        <Spacer />
+        <Text fontSize="sm">{bookmark.title}</Text>
       </Link>
-      <Spacer />
       <Box
         mr={2}
         ml={2}
