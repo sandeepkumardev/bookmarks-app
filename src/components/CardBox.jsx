@@ -5,6 +5,7 @@ import {
   CardHeader,
   Heading,
   Input,
+  Link,
   List,
   ListItem,
   Spacer,
@@ -131,10 +132,19 @@ const SingleBookmark = ({ bookmark, deleteBookmark }) => {
       display={"flex"}
       alignItems={"center"}
     >
-      <Box w={"12px"} mr={2} ml={2} mt={0.5}>
-        <img src={bookmark.icon} alt="icon" height={"100%"} width={"100%"} />
-      </Box>
-      {bookmark.title}
+      <Link
+        href={bookmark.url}
+        isExternal
+        display={"flex"}
+        alignItems={"center"}
+        style={{ textDecoration: "none" }}
+      >
+        <Box w={"12px"} mr={2} ml={2} mt={0.5}>
+          <img src={bookmark.icon} alt="icon" height={"100%"} width={"100%"} />
+        </Box>
+        {bookmark.title}
+        <Spacer />
+      </Link>
       <Spacer />
       <Box
         mr={2}
