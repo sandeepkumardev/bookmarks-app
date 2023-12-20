@@ -65,3 +65,11 @@ export function renameCategoryDB(id, newName) {
     console.log("Error in rename category - ", error);
   });
 }
+
+export function renameBookmarkDB(cId, bId, newName) {
+  update(ref(db, `${objName}/${cId}/bookmarks/${bId}`), {
+    title: newName,
+  }).catch((error) => {
+    console.log("Error in rename bookmark - ", error);
+  });
+}

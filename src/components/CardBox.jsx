@@ -8,7 +8,6 @@ import {
   Link,
   List,
   ListItem,
-  Spacer,
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
@@ -17,6 +16,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import {
   deleteBookmarkDB,
   deleteCategoryDB,
+  renameBookmarkDB,
   renameCategoryDB,
 } from "../firebase/sdk";
 import { IoMdDoneAll } from "react-icons/io";
@@ -112,6 +112,7 @@ const CardBox = ({ item }) => {
           {bookmarks.map((bookmark, i) => (
             <SingleBookmark
               key={i}
+              categoryId={item.id}
               bookmark={bookmark}
               deleteBookmark={deleteBookmark}
             />
@@ -122,7 +123,11 @@ const CardBox = ({ item }) => {
   );
 };
 
-const SingleBookmark = ({ bookmark, deleteBookmark }) => {
+const SingleBookmark = ({ categoryId, bookmark, deleteBookmark }) => {
+  const renameBookmark = () => {
+    renameBookmarkDB(categoryId, bookmark.id, "");
+  };
+
   return (
     <ListItem
       style={{
@@ -146,6 +151,8 @@ const SingleBookmark = ({ bookmark, deleteBookmark }) => {
         </Box>
         <Text fontSize="sm">{bookmark.title}</Text>
       </Link>
+
+      <CiEdit fontSize={"18px"} />
       <Box
         mr={2}
         ml={2}
